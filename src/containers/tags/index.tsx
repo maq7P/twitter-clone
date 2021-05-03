@@ -10,6 +10,7 @@ const TagsWidget = () => {
         const tags = useSelector(selectTags);
         const isTagsLoading = useSelector(selectIsTagsLoadingState)
 
+        console.log('isTagsLoading: ', isTagsLoading)
         React.useEffect(() => {
             dispatch(fetchTags())
         }, []);

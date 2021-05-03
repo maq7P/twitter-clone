@@ -30,24 +30,17 @@ import { AddTweetForm } from '../../components/addTweetForm/AddTweetForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTweets } from '../../store/ducks/tweets/actionsCreators';
 import { selectTweets, selectIsTweetsLoadingState } from '../../store/ducks/tweets/selectors';
-import { selectIsTagsLoadingState, selectTags } from '../../store/ducks/tags/selectors';
-import { fetchTags } from '../../store/ducks/tags/actionsCreators';
-import TagsWidget from '../../containers/tags';
+import TagsWidget from '../../containers/Tags';
+import { Route } from 'react-router';
+import { Link } from 'react-router-dom';
+import ArrowBack from '../../components/ArrowBack';
+import TweetsWidget from '../../containers/TweetsWidget';
+import SelectedTweetWidget from '../../containers/SelectedTweetWidget';
+import AddTweetFormWidget from '../../containers/AddTweetFormWidget';
 
 export const Home: React.FC = () => {
   const classes = homeStyles();
-  const dispatch = useDispatch();
 
-  const tweets = useSelector(selectTweets);
-  const isTweetsLoading = useSelector(selectIsTweetsLoadingState)
-
-  const tags = useSelector(selectTags);
-  const isTagsLoading = useSelector(selectIsTagsLoadingState)
-
-  useEffect(() => {
-    dispatch(fetchTweets())
-    dispatch(fetchTags())
-  }, []);
   return (
     <Container className={classes.wrapper} maxWidth="lg">
       <Grid container spacing={3}>
@@ -56,24 +49,37 @@ export const Home: React.FC = () => {
         </Grid>
         <Grid item lg={6} md={7} sm={10} xs={10}>
           <Paper className={classes.tweetsWrapper} variant="outlined">
-            <Paper className={classNames(classes.tweetsHeader, classes.sticky)} variant="outlined">
-              <Typography variant="h6">Главная</Typography>
-            </Paper>
-            <Paper>
-              <div className={classes.addForm}>
-                <AddTweetForm classes={classes} />
-              </div>
-              <div className={classes.addFormBottomLine} />
-            </Paper>
-            {isTweetsLoading ? (
-              <div className={classes.circularProgressBlock}>
-                <CircularProgress />
-              </div>
-            ) : (
-              tweets.map((tweet) => (
-                <Tweet key={tweet._id} text={tweet.text} classes={classes} user={tweet.user} />
-              ))
-            )}
+            <Route path="/home" exact>
+              <Paper
+                className={classNames(classes.tweetsHeader, classes.sticky)}
+                variant="outlined">
+                <Typography variant="h6">Главная</Typography>
+              </Paper>
+            </Route>
+            <Route path="/home/:any">
+              <Paper
+                className={classNames(classes.tweetsHeader, classes.sticky, classes.df)}
+                variant="outlined">
+                <Box mr="10px">
+                  <ArrowBack />
+                </Box>
+                <Typography variant="h6">Твитнуть</Typography>
+              </Paper>
+            </Route>
+            <Route path={['/home', '/home/search']} exact>
+              <Paper>
+                <div className={classes.addForm}>
+                  <AddTweetFormWidget classes={classes} />
+                </div>
+                <div className={classes.addFormBottomLine} />
+              </Paper>
+            </Route>
+            <Route path="/home" exact>
+              <TweetsWidget classes={classes} />
+            </Route>
+            <Route path="/home/tweet/:id" exact>
+              <SelectedTweetWidget classes={classes} />
+            </Route>
           </Paper>
         </Grid>
         <Grid item lg={3} md={3}>
@@ -91,7 +97,7 @@ export const Home: React.FC = () => {
                 }}
                 fullWidth
               />
-              <TagsWidget/>
+              <TagsWidget />
               <Paper className={classes.rightSideBlock}>
                 <Paper className={classes.rightSideBlockHeader} variant="outlined">
                   <b>Кого читать</b>

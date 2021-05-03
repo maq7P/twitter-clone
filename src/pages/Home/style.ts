@@ -193,5 +193,9 @@ export const homeStyles = makeStyles((theme: Theme) => ({
     circularProgressBlock: {
         marginTop: 40,
         textAlign: 'center',
-    }
+    },
+    df: {
+        display: 'flex',
+        alignItems: 'center',
+    },
 }))

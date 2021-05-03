@@ -20,6 +20,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import CreateIcon from '@material-ui/icons/Create'
 import { AddTweetForm } from '../addTweetForm/AddTweetForm';
 import { ModalBlock } from '../modal/Modal';
+import { Link } from 'react-router-dom';
+import AddTweetFormWidget from '../../containers/AddTweetFormWidget';
 
 interface Props {
     classes: ReturnType<typeof homeStyles>;
@@ -45,11 +47,13 @@ const SideMenu: React.FC<Props> = ({classes}: Props): React.ReactElement => {
     }
     return (
             <ul className={classNames(classes.sideMenuList, classes.sticky)}>
-                <li className={classes.sideMenuListItem}>
-                    <IconButton className={classes.logo} aria-label='delete' color="primary">
-                        <TwitterIcon id="logo"/>
-                    </IconButton>
-                </li>
+                <Link to="/home">
+                    <li className={classes.sideMenuListItem}>
+                        <IconButton className={classes.logo} aria-label='delete' color="primary">
+                            <TwitterIcon id="logo"/>
+                        </IconButton>
+                    </li>
+                </Link>
                 <li className={classes.sideMenuListItem}>
                     <div>
                         <i className="material-icons" color="secondary">#</i>
@@ -120,7 +124,7 @@ const SideMenu: React.FC<Props> = ({classes}: Props): React.ReactElement => {
                 </li>
                 <ModalBlock onClose={handleClickCloseTweet} visible={visibleAddTweet}>
                     <div style={{ width: 550 }}>
-                        <AddTweetForm maxRows={15} classes={classes} />
+                        <AddTweetFormWidget classes={classes} />
                     </div>
                 </ModalBlock>
             </ul>

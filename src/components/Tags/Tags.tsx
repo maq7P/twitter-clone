@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import { TagsState } from '../../store/ducks/tags/contracts/state';
 import { useTagStyles } from './style';
+import { Link } from 'react-router-dom';
 
 interface ITags {
   items: {
@@ -34,19 +35,21 @@ const Tags: React.FC<ITags> = ({ items, isLoading }) => {
           </div>
         ) : (
           items.map((item) => (
-            <Box key={item._id}>
-              <ListItem className={classes.item}>
-                <ListItemText
-                  primary={item.name}
-                  secondary={
-                    <Typography component="span" variant="body2" color="textSecondary">
-                      Твитов: {item.count}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-              <Divider component="li" />
-            </Box>
+            <Link to={`/home/search?q=${item.name}`}>
+              <Box key={item._id}>
+                <ListItem className={classes.item}>
+                  <ListItemText
+                    primary={item.name}
+                    secondary={
+                      <Typography component="span" variant="body2" color="textSecondary">
+                        Твитов: {item.count}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+                <Divider component="li" />
+              </Box>
+            </Link>
           ))
         )}
       </List>

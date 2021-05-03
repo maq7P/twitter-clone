@@ -10,9 +10,10 @@ import EmojiIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import { homeStyles } from '../../pages/Home/style';
 
 
-interface AddTweetFormProps {
+export interface AddTweetFormProps {
   classes: ReturnType<typeof homeStyles>;
   maxRows?: number;
+  onSubmit: (arg: any) => void
 }
 
 const MAX_LENGTH = 280;
@@ -20,6 +21,7 @@ const MAX_LENGTH = 280;
 export const AddTweetForm: React.FC<AddTweetFormProps> = ({
   classes,
   maxRows,
+  onSubmit
 }: AddTweetFormProps): React.ReactElement => {
   const [text, setText] = React.useState<string>('')
   const textLimitPercent = Math.round(text.length / MAX_LENGTH * 100)
@@ -31,6 +33,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
     }  
   }
   const handleClickAddTweet = (): void => {
+    onSubmit(text)
     setText('')
   }
 
@@ -89,7 +92,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
             onClick={handleClickAddTweet}
             color="primary"
             variant="contained"
-            disabled={textLimitPercent > 100}
+            disabled={!text || textLimitPercent > 100}
             >
             Твитнуть
           </Button>
