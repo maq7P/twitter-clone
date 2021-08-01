@@ -20,6 +20,10 @@ export const fetchAddTweet = (payload: string): FetchAddTweetType => ({
     type: TweetActionsType.FETCH_ADD_TWEET,
     payload
 })
+// export const setAddFormState = (payload: typeof LoadingAddFormState): FetchAddTweetType => ({
+//     type: TweetActionsType.FETCH_ADD_TWEET,
+//     payload
+// })
 
 
 

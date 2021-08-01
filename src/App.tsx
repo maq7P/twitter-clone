@@ -1,7 +1,6 @@
 import React from 'react';
 import {Route, Switch } from 'react-router-dom';
 import {Home, SignIn, Test} from "./pages";
-
 function App() {
   return (
     <div className="App">
